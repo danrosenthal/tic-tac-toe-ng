@@ -2,6 +2,7 @@ import * as React from "react";
 import { mount } from "enzyme";
 import Index from "../pages/index";
 import Board from "../components/Board";
+import Cell from "../components/Cell";
 
 describe("Pages", () => {
   describe("Index", () => {
@@ -13,6 +14,13 @@ describe("Pages", () => {
     it("should render a board", function() {
       const wrap = mount(<Index />);
       expect(wrap.find(Board).length).toEqual(1);
+    });
+  });
+
+  describe("Board", () => {
+    it("should render columns squared amount of cells when given a columns prop", () => {
+      const board = mount(<Board columns={3} />);
+      expect(board.find(Cell).length).toEqual(9);
     });
   });
 });
@@ -30,4 +38,9 @@ describe("Pages", () => {
       [{value: ''}, {value: ''}, {value: ''}],
       [{value: ''}, {value: ''}, {value: ''}],
     ]
+
+    <Board>
+      <Cell>
+      <Cell>
+    </Board>
 */

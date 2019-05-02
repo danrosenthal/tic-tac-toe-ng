@@ -1,9 +1,14 @@
 import * as React from "react";
 
-export interface Props {
+import Cell from '../Cell/index';
 
+export interface Props {
+  columns: number;
 }
 
-export default function Board({}: Props) {
-  return <div>I'm a board</div>;
+export default function Board({columns}: Props) {
+  const numOfCells = columns * columns;
+
+  const cellMarkup = Array(numOfCells).fill(<Cell />);
+  return <div>{cellMarkup}</div>;
 }
