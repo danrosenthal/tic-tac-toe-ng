@@ -2,13 +2,22 @@ import * as React from "react";
 
 import Cell from '../Cell/index';
 
-export interface Props {
-  columns: number;
+export interface Cell {
+  value: string | null;
+  onClick(): void;
 }
 
-export default function Board({columns}: Props) {
-  const numOfCells = columns * columns;
+export interface Props {
+  cells: Cell[][];
+}
 
-  const cellMarkup = Array(numOfCells).fill(<Cell />);
+export default function Board({cells}: Props) {
+
+  const cellMarkup = cells.map((matrix, verticalIndex) => {
+    return matrix.map((cell, horizontalIndex) => {
+      return (<Cell key={`${verticalIndex}, ${horizontalIndex}`} onClick={cell.onClick} value={cell.value} />);
+    })
+  });
+
   return <div>{cellMarkup}</div>;
 }
