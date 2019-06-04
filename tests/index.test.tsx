@@ -21,26 +21,30 @@ describe("Pages", () => {
   describe("Board", () => {
     it("should render a Cell component for each given cell", () => {
       const cells = [
-        [{value: null, onClick: noop}, {value: 'O', onClick: noop}, {value: 'O', onClick: noop}],
-        [{value: 'X', onClick: noop}, {value: 'O', onClick: noop}, {value: 'O', onClick: noop}],
-        [{value: 'X', onClick: noop}, {value: 'O', onClick: noop}, {value: 'O', onClick: noop}],
+        [{value: null}, {value: 'O'}, {value: 'O'}],
+        [{value: 'X'}, {value: 'O'}, {value: 'O'}],
+        [{value: 'X'}, {value: 'O'}, {value: 'O'}],
       ];
 
-      const board = mount(<Board cells={cells} />);
+      const board = mount(<Board cells={cells} onClick={noop} />);
       expect(board.find(Cell).length).toEqual(9);
     });
 
-    it("should render cells with a given value and click handler", () => {
+    it("should call onClick with a cells coordinates when a cell is clicked", () => {
+
+      const spy = jest.fn();
+
       const cells = [
-        [{value: 'X', onClick: noop}, {value: 'O', onClick: noop}],
-        [{value: 'X', onClick: noop}, {value: 'O', onClick: noop}],
+        [{value: null}, {value: null}],
+        [{value: null}, {value: null}],
       ];
 
-      const board = mount(<Board cells={cells} />);
+      const board = mount(<Board cells={cells} onClick={spy} />);
 
-      expect(board.find(Cell).map((cell) => {
-        return cell.props();
-      })).toEqual([{value: 'X', onClick: noop}, {value: 'O', onClick: noop}, {value: 'X', onClick: noop}, {value: 'O', onClick: noop}])
+      board.find(Cell).last().simulate('click');
+
+      expect(spy).toHaveBeenCalledWith(1, 1);
+      
     });
 
   });

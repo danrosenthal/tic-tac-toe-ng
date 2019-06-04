@@ -1,23 +1,36 @@
 import * as React from "react";
 
-import Cell from '../Cell/index';
+import Cell from "../Cell/index";
 
 export interface Cell {
   value: string | null;
-  onClick(): void;
 }
 
 export interface Props {
   cells: Cell[][];
+  onClick(x: number, y: number): void;
 }
 
-export default function Board({cells}: Props) {
+export default function Board({ cells, onClick }: Props) {
+  const numberOfCells = cells[0].length;
 
-  const cellMarkup = cells.map((matrix, verticalIndex) => {
-    return matrix.map((cell, horizontalIndex) => {
-      return (<Cell key={`${verticalIndex}, ${horizontalIndex}`} onClick={cell.onClick} value={cell.value} />);
-    })
+  const cellMarkup = cells.map((matrix, horizontalIndex) => {
+    return matrix.map((cell, verticalIndex) => {
+      return (
+        <Cell
+          key={`${horizontalIndex}, ${verticalIndex}`}
+          onClick={() => onClick(horizontalIndex, verticalIndex)}
+          value={cell.value}
+        />
+      );
+    });
   });
 
-  return <div>{cellMarkup}</div>;
+  return <div style={{
+    display: 'grid',
+    gridTemplateColumns: `repeat(${numberOfCells}, 1fr)`,
+    gridTemplateRows: `repeat(${numberOfCells}, 1fr)`,
+    width: numberOfCells * 100,
+    height: numberOfCells * 100,
+  }}>{cellMarkup}</div>;
 }

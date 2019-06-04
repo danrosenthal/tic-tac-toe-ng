@@ -5,9 +5,19 @@ export interface Props {
   onClick(): void;
 }
 
-export default function Cell({
-  value,
-  onClick
-}: Props) {
-  return value ? <div>{value}</div> : <button onClick={onClick}>{value}</button>;
+export default function Cell({ value, onClick }: Props) {
+  const style: React.CSSProperties = {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "transparent",
+    border: "1px solid black",
+  };
+  return value ? (
+    <div style={style}>{value}</div>
+  ) : (
+    <button style={style} onClick={onClick}>
+      -
+    </button>
+  );
 }
